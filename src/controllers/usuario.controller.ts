@@ -34,6 +34,14 @@ class UsuarioController {
         }
         return res.status(200).send(resultadoUsuarios);
     }  
+
+    public async getUsuarioById(req: Request, res: Response): Promise<Response> {
+        const {cliente} =  req.query;
+        let retorno = await config.database();
+        let retornoUsuarios = await retorno.query(`select * from usuario where usu_id = ${cliente}`);
+        let resultadoUsuarios = await retornoUsuarios.recordset;
+        return res.status(200).send(resultadoUsuarios);
+    }  
 }
 
 export default new UsuarioController();

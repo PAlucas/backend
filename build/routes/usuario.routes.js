@@ -9,4 +9,5 @@ const router = (0, express_1.Router)();
 router.get('/', usuario_controller_1.default.getAprendiz);
 router.post('/', usuario_controller_1.default.getUsuario);
 router.post('/Cadastrar', usuario_controller_1.default.cadastrarUsuario);
+router.get('/userId', usuario_controller_1.default.getAprendiz);
 exports.default = router;

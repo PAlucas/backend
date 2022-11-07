@@ -14,7 +14,7 @@ class Config {
     constructor() {
         this.USER = 'lucas';
         this.PASSWORD = 'trabalho#123';
-        this.SERVER = 'treina-ai.database.windows.net';
+        this.SERVER = 'treina-ai-tis.database.windows.net';
         this.DATABASE = 'Tutoriais';
     }
     objectConfig() {

@@ -2,7 +2,7 @@ const sql = require("mssql");
 class Config {
     public USER = 'lucas';
     public PASSWORD = 'trabalho#123';
-    public SERVER = 'treina-ai.database.windows.net';
+    public SERVER = 'treina-ai-tis.database.windows.net';
     public DATABASE = 'Tutoriais';
 
     public objectConfig() : object{

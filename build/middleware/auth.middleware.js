@@ -9,12 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const sessions = require('express-session');
 class AuthMiddleware {
     autorizarUsuarioByParams(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const usuario = yield sessions.userId;
-            req.body.user = usuario;
+            const usuario = yield req.params.cliente;
+            req.body.usu_id = usuario;
             return next();
         });
     }
