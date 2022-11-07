@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const config_1 = __importDefault(require("../config"));
 const tipos_1 = __importDefault(require("../enum/tipos"));
+const sessions = require('express-session');
 class UsuarioController {
     cadastrarUsuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -45,6 +46,7 @@ class UsuarioController {
             if (resultadoUsuarios.length == 0) {
                 return res.status(404).send("Usuário ou senha incorreto");
             }
+            //sessions.userId = resultadoUsuarios['usu_id'];
             return res.status(200).send(resultadoUsuarios);
         });
     }

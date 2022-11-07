@@ -18,6 +18,7 @@ const modulos_routes_1 = __importDefault(require("./routes/modulos.routes"));
 const acesso_routes_1 = __importDefault(require("./routes/acesso.routes"));
 const app = (0, express_1.default)();
 const cors = require('cors');
+const sessions = require('express-session');
 app.use(express_1.default.json());
 app.use(cors());
 app.use('/AcessoModulo', acesso_routes_1.default);
