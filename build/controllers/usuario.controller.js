@@ -42,6 +42,9 @@ class UsuarioController {
             let retorno = yield config_1.default.database();
             let retornoUsuarios = yield retorno.query(`select * from usuario where email = '${email}' and senha = '${senha}'`);
             let resultadoUsuarios = yield retornoUsuarios.recordset;
+            if (resultadoUsuarios.length == 0) {
+                return res.status(404).send("Usuário ou senha incorreto");
+            }
             return res.status(200).send(resultadoUsuarios);
         });
     }

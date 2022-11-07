@@ -29,6 +29,9 @@ class UsuarioController {
         let retorno = await config.database();
         let retornoUsuarios = await retorno.query(`select * from usuario where email = '${email}' and senha = '${senha}'`);
         let resultadoUsuarios = await retornoUsuarios.recordset;
+        if(resultadoUsuarios.length == 0){
+            return res.status(404).send("Usuário ou senha incorreto");
+        }
         return res.status(200).send(resultadoUsuarios);
     }  
 }
