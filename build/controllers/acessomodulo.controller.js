@@ -20,6 +20,9 @@ class AcessoController {
             let modulos = moduloId.toString().split(",");
             let retorno = yield config_1.default.database();
             yield retorno.query(`delete acessomodulo where usu_id = ${usuId}`);
+            if (usuId == null) {
+                return res.status(201).send("Necessário selecionar usuário !!!");
+            }
             modulos.forEach((element) => __awaiter(this, void 0, void 0, function* () {
                 yield retorno.query(`insert into acessomodulo values ('${usuId}','${element}')`);
             }));

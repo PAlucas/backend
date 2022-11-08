@@ -8,6 +8,9 @@ class AcessoController {
         let modulos = moduloId.toString().split(",");
         let retorno = await config.database();
         await retorno.query(`delete acessomodulo where usu_id = ${usuId}`);
+        if(usuId == null){
+            return res.status(201).send("Necessário selecionar usuário !!!");
+        }
         modulos.forEach(async (element : string) => {
             await retorno.query(`insert into acessomodulo values ('${usuId}','${element}')`);
         });
