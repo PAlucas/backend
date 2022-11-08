@@ -20,7 +20,7 @@ const app = (0, express_1.default)();
 const cors = require('cors');
 app.use(express_1.default.json());
 app.use(cors());
-app.use('/AcessoModulo', acesso_routes_1.default);
+app.use('/Acessomodulo', acesso_routes_1.default);
 app.use('/Usuario', usuario_routes_1.default);
 app.use('/Modulo', modulos_routes_1.default);
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

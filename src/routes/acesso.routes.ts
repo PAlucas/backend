@@ -5,7 +5,7 @@ import authMiddleware from '../middleware/auth.middleware';
 const router = Router();
 
 // router.get('/', ModuloController.getModulo);
-// router.post('/', AcessoController.getModulosCadastrados);
-router.post('/Cadastrar',authMiddleware.autorizarUsuarioByParams, AcessoController.cadastrarAcesso);
+router.get('/usuario', AcessoController.getAcessosAprendiz);
+router.post('/Cadastrar', AcessoController.cadastrarAcesso);
 
 export default router;

@@ -13,7 +13,7 @@ class AuthMiddleware {
     autorizarUsuarioByParams(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             const usuario = yield req.params.cliente;
-            req.body.usu_id = usuario;
+            req.body.usuario_id = usuario;
             return next();
         });
     }

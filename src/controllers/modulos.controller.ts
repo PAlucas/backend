@@ -10,7 +10,7 @@ class UsuarioController {
         let existeModulo = await retorno.query(`select * from modulo where nome = '${nome}'`);
         let resultadoExisteModulos = await existeModulo.recordset;
         if(resultadoExisteModulos.length > 0){
-            return res.status(404).send("Já existe o módulo !");
+            return res.status(201).send("Já existe o módulo !");
         }
         await retorno.query(`insert into modulo values ('${nome}')`);
         return res.status(200).send("Módulo Adicionado");

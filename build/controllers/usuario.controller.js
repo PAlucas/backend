@@ -22,7 +22,7 @@ class UsuarioController {
             let existeUsuario = yield retorno.query(`select * from usuario where email = '${email}'`);
             let resultadoExisteUsuarios = yield existeUsuario.recordset;
             if (resultadoExisteUsuarios.length > 0) {
-                return res.status(404).send("Já existe o Usuário !");
+                return res.status(201).send("Já existe o Usuário !");
             }
             yield retorno.query(`insert into usuario values ('${nome}','${email}', '${senha}','${sobrenome}','${tipo}')`);
             return res.status(200).send("Usuario Adicionado");
@@ -31,7 +31,7 @@ class UsuarioController {
     getAprendiz(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let retorno = yield config_1.default.database();
-            let retornoUsuarios = yield retorno.query(`select * from usuario where tipo =${tipos_1.default.Administrador}`);
+            let retornoUsuarios = yield retorno.query(`select * from usuario where tipo =${tipos_1.default.Aprendiz}`);
             let resultadoUsuarios = yield retornoUsuarios.recordset;
             return res.status(200).send(resultadoUsuarios);
         });
@@ -43,7 +43,7 @@ class UsuarioController {
             let retornoUsuarios = yield retorno.query(`select * from usuario where email = '${email}' and senha = '${senha}'`);
             let resultadoUsuarios = yield retornoUsuarios.recordset;
             if (resultadoUsuarios.length == 0) {
-                return res.status(404).send("Usuário ou senha incorreto");
+                return res.status(201).send("Usuário ou senha incorreto");
             }
             return res.status(200).send(resultadoUsuarios);
         });

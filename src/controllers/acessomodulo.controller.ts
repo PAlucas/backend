@@ -14,6 +14,14 @@ class AcessoController {
         return res.status(200).send("Acesso adicionado para usuário");
     }
 
+    public async getAcessosAprendiz(req: Request, res: Response): Promise<Response>{
+        const {aprendiz} = req.query;
+        let retorno = await config.database();
+        let reqUsuarios = await retorno.query(`select * from acessomodulo where usu_id = ${aprendiz}`);
+        let resultadoUsuarios = await reqUsuarios.recordset;
+        return res.status(200).send(resultadoUsuarios);
+    }
+
 }
 
 export default new AcessoController();

@@ -26,5 +26,14 @@ class AcessoController {
             return res.status(200).send("Acesso adicionado para usuário");
         });
     }
+    getAcessosAprendiz(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { aprendiz } = req.query;
+            let retorno = yield config_1.default.database();
+            let reqUsuarios = yield retorno.query(`select * from acessomodulo where usu_id = ${aprendiz}`);
+            let resultadoUsuarios = yield reqUsuarios.recordset;
+            return res.status(200).send(resultadoUsuarios);
+        });
+    }
 }
 exports.default = new AcessoController();
