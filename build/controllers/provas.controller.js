@@ -34,12 +34,10 @@ class Provas {
     retornaProva(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { modulo } = req.query;
-            console.log(modulo);
             const connStr = "DefaultEndpointsProtocol=https;AccountName=armazenamentotis;AccountKey=izM0/F4Pej6B+2hhdHMpKO4Bcy7zSuUJGLdheikjmnDh+pUMkDS/OCLTeADHdXpeAmOTiNyR4y4j+AStG+nkJw==;EndpointSuffix=core.windows.net";
             let retorno = yield config_1.default.database();
             let existeModulo = yield retorno.query(`select * from provas where modulo_id = '${modulo}'`);
             let resultadoExisteModulos = yield existeModulo.recordset;
-            console.log(resultadoExisteModulos);
             if (resultadoExisteModulos.length == 0) {
                 return res.status(200).send("Sem cliente");
             }

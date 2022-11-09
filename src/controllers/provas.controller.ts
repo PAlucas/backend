@@ -22,13 +22,11 @@ class Provas {
 
     public async retornaProva(req: any, res: Response): Promise<Response> {
         const {modulo} = req.query;
-        console.log(modulo);
         const connStr = "DefaultEndpointsProtocol=https;AccountName=armazenamentotis;AccountKey=izM0/F4Pej6B+2hhdHMpKO4Bcy7zSuUJGLdheikjmnDh+pUMkDS/OCLTeADHdXpeAmOTiNyR4y4j+AStG+nkJw==;EndpointSuffix=core.windows.net";
 
         let retorno = await config.database();
         let existeModulo = await retorno.query(`select * from provas where modulo_id = '${modulo}'`);
         let resultadoExisteModulos = await existeModulo.recordset;
-        console.log(resultadoExisteModulos);
         if(resultadoExisteModulos.length == 0){
             return res.status(200).send("Sem cliente");
         }
