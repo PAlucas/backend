@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import provasController from '../controllers/provas.controller';
-const uuid = require("uuid");
 const azure = require("azure-storage");
 const router = Router();
 import multer, { Multer } from 'multer';
