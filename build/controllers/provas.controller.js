@@ -8,12 +8,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const config_1 = __importDefault(require("../config"));
+const { DefaultAzureCredential } = require("@azure/identity");
+const { BlobServiceClient } = require("@azure/storage-blob");
+const { StorageSharedKeyCredential } = require("@azure/storage-blob");
 class Provas {
-    cadastrarAcesso(req, res) {
+    cadastrarProva(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req.body);
-            return res.status(200).send("Acesso adicionado para usuário");
+            const { modulo } = req.body;
+            const file = req.file;
+            let retorno = yield config_1.default.database();
+            let existeModulo = yield retorno.query(`select * from provas where modulo_id = '${modulo}'`);
+            let resultadoExisteModulos = yield existeModulo.recordset;
+            if (resultadoExisteModulos.length > 0) {
+                return res.status(201).send("Já existe prova para módulo !");
+            }
+            yield retorno.query(`insert into provas values ('${modulo}', '${file.originalname}')`);
+            return res.status(200).send("Prova Adicionada");
+        });
+    }
+    retornaProva(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const connStr = "DefaultEndpointsProtocol=https;AccountName=armazenamentotis;AccountKey=izM0/F4Pej6B+2hhdHMpKO4Bcy7zSuUJGLdheikjmnDh+pUMkDS/OCLTeADHdXpeAmOTiNyR4y4j+AStG+nkJw==;EndpointSuffix=core.windows.net";
+            const blobServiceClient = BlobServiceClient.fromConnectionString(connStr);
+            const containerClient = blobServiceClient.getContainerClient("demo");
+            const blockBlobClient = containerClient.getBlockBlobClient("Prova1.docx");
+            const downloadBlockBlobResponse = yield blockBlobClient.download(0);
+            return res.status(200).send(downloadBlockBlobResponse);
         });
     }
 }
