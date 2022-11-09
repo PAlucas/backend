@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class AuthMiddleware {
     autorizarUsuarioByParams(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const usuario = yield req.params.cliente;
-            req.body.usuario_id = usuario;
+            const usuario = yield req.query.cliente;
+            req.body.id = usuario;
             return next();
         });
     }

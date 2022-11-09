@@ -35,18 +35,30 @@ class UsuarioController {
             return res.status(200).send(resultadoModulos);
         });
     }
+    getModuloComTarefas(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let retorno = yield config_1.default.database();
+            let retornoModulos = yield retorno.query(`select m.modulo_id,m.nome ,count(t.modulo_id) numtarefa
+                                                    from tutoriais t right join modulo m on m.modulo_id = t.modulo_id
+                                                    group by t.modulo_id,m.modulo_id,m.nome`);
+            let resultadoModulos = yield retornoModulos.recordset;
+            return res.status(200).send(resultadoModulos);
+        });
+    }
     getModulosEspecificos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.body;
             let retorno = yield config_1.default.database();
             let retornoModulos = yield retorno.query(`
-        select 
-        * 
-        from 
-        acessomodulo a 
-        inner join modulo m on m.modulo_id = a.modulo_id 
+        select
+        m.nome, m.modulo_id, count(t.modulo_id) numtarefa
+        from
+        acessomodulo a
+        inner join modulo m on m.modulo_id = a.modulo_id
         inner join usuario u on u.usu_id = a.usu_id
-        where u.usu_id = ${id}`);
+		left join tutoriais t on t.modulo_id = a.modulo_id
+        where u.usu_id = ${id}
+        group by m.nome, m.modulo_id, t.modulo_id`);
             let resultadoModulos = yield retornoModulos.recordset;
             return res.status(200).send(resultadoModulos);
         });

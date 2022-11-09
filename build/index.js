@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const usuario_routes_1 = __importDefault(require("./routes/usuario.routes"));
 const modulos_routes_1 = __importDefault(require("./routes/modulos.routes"));
 const acesso_routes_1 = __importDefault(require("./routes/acesso.routes"));
+const tutoriais_routes_1 = __importDefault(require("./routes/tutoriais.routes"));
 const app = (0, express_1.default)();
 const cors = require('cors');
 app.use(express_1.default.json());
@@ -23,6 +24,7 @@ app.use(cors());
 app.use('/Acessomodulo', acesso_routes_1.default);
 app.use('/Usuario', usuario_routes_1.default);
 app.use('/Modulo', modulos_routes_1.default);
+app.use('/Tutorial', tutoriais_routes_1.default);
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return res.status(200).send("Hello World!!");
 }));
