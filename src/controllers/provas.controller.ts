@@ -31,14 +31,7 @@ class Provas {
             return res.status(200).send("Sem Prova!!");
         }
         const blobServiceClient = BlobServiceClient.fromConnectionString(connStr);
-        const containerClient = blobServiceClient.GetContainerReference("demo");
-          
-          // Get the containerClient before you run these snippets,
-          // Can be obtained from `blobServiceClient.getContainerClient("<your-container-name>");`
-          let i = 1;
-          for await (const blob of containerClient.listBlobsFlat()) {
-            console.log(`Blob ${i++}: ${blob.name}`);
-          }
+
         return res.status(200).send("teste");
     }
 
