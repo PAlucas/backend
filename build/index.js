@@ -31,3 +31,4 @@ app.use('/Prova', provas_routes_1.default);
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return res.status(200).send("Hello World!!");
 }));
+app.listen(process.env.PORT);
