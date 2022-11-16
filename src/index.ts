@@ -18,4 +18,3 @@ app.use('/Prova', provasRoutes);
 app.get('/', async (req, res) =>{
     return res.status(200).send("Hello World!!");
 })
-app.listen(process.env.PORT);
