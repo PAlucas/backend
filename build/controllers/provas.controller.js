@@ -34,7 +34,6 @@ class Provas {
     retornaProva(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { modulo } = req.query;
-            const connStr = "DefaultEndpointsProtocol=https;AccountName=armazenamentotis;AccountKey=izM0/F4Pej6B+2hhdHMpKO4Bcy7zSuUJGLdheikjmnDh+pUMkDS/OCLTeADHdXpeAmOTiNyR4y4j+AStG+nkJw==;EndpointSuffix=core.windows.net";
             let retorno = yield config_1.default.database();
             let existeModulo = yield retorno.query(`select * from provas where modulo_id = '${modulo}'`);
             let resultadoExisteModulos = yield existeModulo.recordset;
@@ -43,17 +42,64 @@ class Provas {
             }
             const account = "armazenamentotis";
             const accountKey = "izM0/F4Pej6B+2hhdHMpKO4Bcy7zSuUJGLdheikjmnDh+pUMkDS/OCLTeADHdXpeAmOTiNyR4y4j+AStG+nkJw==";
-            // Use StorageSharedKeyCredential with storage account and account key
-            // StorageSharedKeyCredential is only available in Node.js runtime, not in browsers
             const sharedKeyCredential = new StorageSharedKeyCredential(account, accountKey);
             const blobServiceClient = new BlobServiceClient(`https://${account}.blob.core.windows.net`, sharedKeyCredential);
             let containerItem = yield blobServiceClient.getContainerClient("demo");
             let blobs = yield containerItem.getBlobClient(resultadoExisteModulos[0].arquivo);
             let arquivo = {
                 nome: resultadoExisteModulos[0].arquivo,
+                id: resultadoExisteModulos[0].prova_id,
                 arquivo: blobs
             };
             return res.status(200).send(arquivo);
+        });
+    }
+    cadastrarProvaFeita(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { usuId, provaId } = req.body;
+            const file = req.file;
+            let retorno = yield config_1.default.database();
+            let existeModulo = yield retorno.query(`select * from notaprova where prova_id = '${provaId}' and usu_id = ${usuId}`);
+            let resultadoExisteModulos = yield existeModulo.recordset;
+            if (resultadoExisteModulos.length > 0) {
+                return res.status(201).send("Já foi enviada a prova");
+            }
+            if (file == undefined) {
+                return res.status(404).send("Sem arquivo");
+            }
+            yield retorno.query(`insert into notaprova (usu_id, prova_id, arquivo) values (${usuId}, ${provaId},'${file.originalname}')`);
+            return res.status(200).send("Prova Adicionada");
+        });
+    }
+    provasFeitas(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { usuId } = req.body;
+            let retorno = yield config_1.default.database();
+            let existeModulo = yield retorno.query(`select m.nome, np.arquivo, np.nota from 
+                                                provas p
+                                                    inner join modulo m on p.modulo_id = m.modulo_id
+                                                    inner join notaprova np on p.prova_id = np.prova_id
+                                                where usu_id = ${usuId}`);
+            let resultadoExisteModulos = yield existeModulo.recordset;
+            if (resultadoExisteModulos.length == 0) {
+                return res.status(404).send("Sem provas feitas");
+            }
+            const account = "armazenamentotis";
+            const accountKey = "izM0/F4Pej6B+2hhdHMpKO4Bcy7zSuUJGLdheikjmnDh+pUMkDS/OCLTeADHdXpeAmOTiNyR4y4j+AStG+nkJw==";
+            const sharedKeyCredential = new StorageSharedKeyCredential(account, accountKey);
+            const blobServiceClient = new BlobServiceClient(`https://${account}.blob.core.windows.net`, sharedKeyCredential);
+            let containerItem = yield blobServiceClient.getContainerClient("demo");
+            let final = [];
+            resultadoExisteModulos.forEach((element, index) => {
+                let blobs = containerItem.getBlobClient(resultadoExisteModulos[index].arquivo);
+                let arquivo = {
+                    modulo: resultadoExisteModulos[index].nome,
+                    nota: resultadoExisteModulos[index].nota,
+                    arquivo: blobs
+                };
+                final.push(arquivo);
+            });
+            return res.status(200).send(final);
         });
     }
 }
