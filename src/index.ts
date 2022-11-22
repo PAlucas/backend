@@ -10,7 +10,7 @@ const cors = require('cors');
 
 app.use(express.json());
 app.use(cors());
-app.listen(process.env.PORT||3333);
+app.listen(process.env.PORT||3332);
 app.use('/Acessomodulo', acessoRoutes);
 app.use('/Usuario', usuarioRoutes);
 app.use('/Modulo', moduloRoutes);
