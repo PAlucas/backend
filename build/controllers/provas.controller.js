@@ -111,7 +111,7 @@ class Provas {
                                                         inner join usuario u on np.usu_id = u.usu_id,
                                                         provas pa left join modulo m on pa.modulo_id = m.modulo_id
                                                 where np.nota is null
-                                                and pa.prova_id = p.modulo_id`);
+                                                and pa.prova_id = p.prova_id`);
             let resultadoExisteModulos = yield existeModulo.recordset;
             const account = "armazenamentotis";
             const accountKey = "izM0/F4Pej6B+2hhdHMpKO4Bcy7zSuUJGLdheikjmnDh+pUMkDS/OCLTeADHdXpeAmOTiNyR4y4j+AStG+nkJw==";
